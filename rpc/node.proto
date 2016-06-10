@@ -1,0 +1,46 @@
+package com.metasoft.node;
+option py_generic_services = true;
+option cc_generic_services = true;
+option java_generic_services = true;
+option java_package = "com.metasoft.flying.node";
+option java_outer_classname = "NodeProto";
+
+message NodeRequest {
+  required string id = 1;
+  required uint32 type = 2;
+  optional string name = 3;
+}
+
+message GenericResponse {
+  required bool ok = 1;
+  optional string msg = 2;
+}
+
+message IdentRequest {
+  required string uid = 1;
+  required string loginKey = 2;
+}
+
+message GenericRequest {
+}
+
+message Red5Response {
+  required string url = 1;
+}
+
+message Red5Request {
+  required string group = 1;
+}
+
+service NodeService {
+  rpc registNode (NodeRequest) returns (GenericResponse);
+  rpc identifyConn (IdentRequest) returns (GenericResponse);
+  //rpc StreamStart (IdentRequest) returns (GenericResponse);
+  //rpc StreamStop (IdentRequest) returns (GenericResponse);
+}
+
+service Red5Service {
+  rpc AssignRed5 (GenericRequest) returns (Red5Response);
+  rpc ForceClose (Red5Request) returns (GenericResponse);
+  rpc CleanStream (Red5Request) returns (GenericResponse);
+}
